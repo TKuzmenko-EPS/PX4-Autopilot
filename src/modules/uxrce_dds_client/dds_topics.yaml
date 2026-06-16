@@ -110,6 +110,9 @@ publications:
     type: px4_msgs::msg::GimbalDeviceAttitudeStatus
     rate_limit: 20.
 
+  - topic: /fmu/out/config_overrides_confirm
+    type: px4_msgs::msg::ConfigOverrides
+
 # Create uORB::Publication
 subscriptions:
   - topic: /fmu/in/register_ext_component_request
