@@ -131,7 +131,6 @@ Takeoff::on_active()
 					// the FW takeoff mode is completed, exit to Hold (handled by Commander)
 					_navigator->get_mission_result()->finished = true;
 					_navigator->set_mission_result_updated();
-					_navigator->mode_completed(getNavigatorStateId());
 
 					_loiter_altitude_msl = NAN; // reset for next takeoff command
 				}
@@ -153,7 +152,6 @@ Takeoff::on_active()
 		} else if (is_mission_item_reached_or_completed() && !_navigator->get_mission_result()->finished) {
 			_navigator->get_mission_result()->finished = true;
 			_navigator->set_mission_result_updated();
-			_navigator->mode_completed(getNavigatorStateId());
 
 			position_setpoint_triplet_s *pos_sp_triplet = _navigator->get_position_setpoint_triplet();
 
@@ -171,6 +169,10 @@ Takeoff::on_active()
 			mission_item_to_position_setpoint(_mission_item, &pos_sp_triplet->current);
 			_navigator->set_position_setpoint_triplet_updated();
 		}
+	}
+
+	if (_navigator->get_mission_result()->finished) {
+		_navigator->mode_completed(getNavigatorStateId());
 	}
 }
 
